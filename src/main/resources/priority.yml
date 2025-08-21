@@ -1,0 +1,12 @@
+########################################
+#    0 is the highest priority         #
+#    permission is queue.<rank>        #
+#    so mvp is queue.mvp               #
+#    ofc you can add as many as u want #
+########################################
+
+default-priority: -1 #-1 = lowest priority always
+
+priorities:
+  mvp: 0
+  vip: 1
