@@ -1,12 +1,13 @@
 package cc.zyrn.venus.profile;
 
+import cc.zyrn.venus.queue.priority.Priority;
 import cc.zyrn.venus.util.ConfigFile;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @Getter
@@ -15,7 +16,7 @@ public class Profile {
 
     private final UUID uuid;
 
-    private int ranking;
+    private Priority priority;
     private int kills, deaths, coins;
 
     public Profile(UUID uuid) {
@@ -30,7 +31,8 @@ public class Profile {
         this.kills = configurationSection.getInt("kills");
     }
 
-    public void save(ConfigFile configFile) throws IOException {
+    @SneakyThrows
+    public void save(ConfigFile configFile) {
         final FileConfiguration fileConfiguration = configFile.getConfig();
 
         fileConfiguration.set("profiles." + uuid.toString() + ".kills", kills);

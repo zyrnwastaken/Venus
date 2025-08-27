@@ -2,6 +2,7 @@ package cc.zyrn.venus.queue;
 
 import cc.zyrn.venus.Venus;
 import cc.zyrn.venus.queue.priority.Priority;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -25,7 +26,13 @@ public class QueueHandler {
     }
 
     private void loadPriorities() {
-        int defaultPriority = venus.getConfig().getInt("default-priority");
+        final FileConfiguration priorityFile = venus.getPriorityFile().getConfig();
+
+        priorityFile.getConfigurationSection("priorities").getKeys(false).forEach(s -> {
+            priorities.add(new Priority(s, "queue." + s, priorityFile.getInt("priorities." + s)));
+        });
+
+        int defaultPriority = priorityFile.getInt("default-priority");
 
         if (defaultPriority == -1) {
             if (priorities.isEmpty()) {
@@ -43,7 +50,6 @@ public class QueueHandler {
     public final Priority getPriority(Player player) {
         return priorities.stream().filter(priority -> player.hasPermission(priority.permission()))
                 .findAny().orElse(defaultPriority);
-
     }
 
 }
