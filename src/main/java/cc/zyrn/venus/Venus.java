@@ -1,5 +1,7 @@
 package cc.zyrn.venus;
 
+import cc.zyrn.venus.hub.HubHandler;
+import cc.zyrn.venus.profile.ProfileHandler;
 import cc.zyrn.venus.queue.QueueHandler;
 import cc.zyrn.venus.util.ConfigFile;
 import lombok.Getter;
@@ -12,6 +14,8 @@ public class Venus extends JavaPlugin {
     private static Venus instance;
 
     private QueueHandler queueHandler;
+    private HubHandler hubHandler;
+    private ProfileHandler profileHandler;
 
     private ConfigFile priorityFile;
     private ConfigFile profilesFile;
@@ -20,20 +24,19 @@ public class Venus extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
-        this.saveDefaultConfig();
     }
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
+
         this.priorityFile = new ConfigFile(this.getDataFolder(), "priority.yml");
         this.queuesFile = new ConfigFile(this.getDataFolder(), "queues.yml");
         this.profilesFile = new ConfigFile(this.getDataFolder(), "profiles.yml");
 
         this.queueHandler = new QueueHandler(this);
+        this.hubHandler = new HubHandler(this);
+        this.profileHandler = new ProfileHandler(this);
     }
 
-    @Override
-    public void onDisable() {
-        super.onDisable();
-    }
 }

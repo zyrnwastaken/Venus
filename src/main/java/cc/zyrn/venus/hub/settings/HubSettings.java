@@ -1,21 +1,23 @@
 package cc.zyrn.venus.hub.settings;
 
 import cc.zyrn.venus.Venus;
-import cc.zyrn.venus.hub.settings.listener.HubSettingsListener;
 import cc.zyrn.venus.util.LocationUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 
+import java.util.Optional;
+
 @Getter
 @Setter
 public class HubSettings {
 
-    private Location spawnLocation;
+    private Optional<Location> spawnLocation;
+    private boolean doubleJump;
 
     public HubSettings(Venus venus) {
-        LocationUtil.STL(venus.getConfig().getString("settings.spawn-location")).ifPresent(location -> this.spawnLocation = location);
-        venus.getServer().getPluginManager().registerEvents(new HubSettingsListener(), venus);
+        this.spawnLocation = LocationUtil.STL(venus.getConfig().getString("settings.spawn-location"));
+        this.doubleJump = venus.getConfig().getBoolean("settings.double-jump");
     }
 
 }

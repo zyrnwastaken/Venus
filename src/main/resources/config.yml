@@ -1,2 +1,3 @@
 settings:
   spawn-location: "null" #set by /setspawn in-game
+  double-jump: true

@@ -1,0 +1,7 @@
+queues:
+  queue1:
+    server-name: test #server name on bungee
+    display-name: Test Queue #display name of queue
+    selector-slot: 5 #slot on server selector
+    maximum-size: 10 #size of queue
+    start-closed: true #starts the queue closed
